@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import type { LucideIcon } from "lucide-react";
 import { Check, Globe, ShieldCheck, Zap, Phone, Link as LinkIcon, Quote } from "lucide-react";
 
 // Local color tokens
@@ -11,60 +13,62 @@ const colors = {
 };
 
 // Simple CTA button
-function CTA({ children = "Get Your Free Website Preview" }) {
-  return (
-    <a
-      href="#contact"
-      className="inline-flex items-center justify-center rounded-2xl px-6 py-3 text-base font-semibold shadow hover:shadow-md transition-all"
-      style={{ background: colors.teal, color: "white" }}
-    >
-      {children}
-    </a>
-  );
-}
+type CTAProps = { children?: React.ReactNode };
+const CTA: React.FC<CTAProps> = ({ children = "Get Your Free Website Preview" }) => (
+  <a
+    href="#contact"
+    className="inline-flex items-center justify-center rounded-2xl px-6 py-3 text-base font-semibold shadow hover:shadow-md transition-all"
+    style={{ background: colors.teal, color: "white" }}
+  >
+    {children}
+  </a>
+);
 
 // Section wrapper
-function Section({ id, className = "", children }) {
-  return (
-    <section id={id} className={`mx-auto w-full max-w-6xl px-5 sm:px-8 ${className}`}>{children}</section>
-  );
-}
+type SectionProps = { id?: string; className?: string; children?: React.ReactNode };
+const Section: React.FC<SectionProps> = ({ id, className = "", children }) => (
+  <section id={id} className={`mx-auto w-full max-w-6xl px-5 sm:px-8 ${className}`}>{children}</section>
+);
 
 // Feature card
-function Feature({ icon: Icon, title, children }) {
-  return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-      <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl" style={{ background: `${colors.teal}15` }}>
-        <Icon size={22} color={colors.teal} />
-      </div>
-      <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
-      <p className="mt-2 text-gray-600 leading-relaxed">{children}</p>
+type FeatureProps = { icon: LucideIcon; title: string; children?: React.ReactNode };
+const Feature: React.FC<FeatureProps> = ({ icon: Icon, title, children }) => (
+  <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+    <div
+      className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl"
+      style={{ background: "rgba(35, 184, 165, 0.10)" }}
+    >
+      <Icon size={22} color={colors.teal} />
     </div>
-  );
-}
+    <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+    <p className="mt-2 text-gray-600 leading-relaxed">{children}</p>
+  </div>
+);
 
 // Pricing tier
-function Tier({ name, setup, monthly, features, highlight }) {
-  return (
-    <div className={`flex flex-col rounded-2xl border p-6 shadow-sm ${highlight ? "border-transparent" : "border-gray-200"}`} style={highlight ? { background: `linear-gradient(180deg, ${colors.teal}1A, white)` } : { background: "white" }}>
-      <h3 className="text-xl font-semibold text-gray-900">{name}</h3>
-      <p className="mt-3 text-3xl font-bold text-gray-900">
-        <span className="text-lg font-medium text-gray-500 align-top">Setup </span>{setup}
-        <span className="ml-3 text-lg font-medium text-gray-500">/ {monthly} per mo</span>
-      </p>
-      <ul className="mt-6 space-y-3">
-        {features.map((f, i) => (
-          <li key={i} className="flex items-start gap-3 text-gray-700">
-            <Check className="mt-1 shrink-0" size={18} color={colors.teal} /> {f}
-          </li>
-        ))}
-      </ul>
-      <div className="mt-6">
-        <CTA>Start with {name}</CTA>
-      </div>
+type TierProps = { name: string; setup: string; monthly: string; features: string[]; highlight?: boolean };
+const Tier: React.FC<TierProps> = ({ name, setup, monthly, features, highlight }) => (
+  <div
+    className={`flex flex-col rounded-2xl border p-6 shadow-sm ${highlight ? "border-transparent" : "border-gray-200"}`}
+    style={highlight ? { background: "linear-gradient(180deg, rgba(35, 184, 165, 0.10), white)" } : { background: "white" }}
+  >
+    <h3 className="text-xl font-semibold text-gray-900">{name}</h3>
+    <p className="mt-3 text-3xl font-bold text-gray-900">
+      <span className="text-lg font-medium text-gray-500 align-top">Setup </span>{setup}
+      <span className="ml-3 text-lg font-medium text-gray-500">/ {monthly} per mo</span>
+    </p>
+    <ul className="mt-6 space-y-3">
+      {features.map((f, i) => (
+        <li key={i} className="flex items-start gap-3 text-gray-700">
+          <Check className="mt-1 shrink-0" size={18} color={colors.teal} /> {f}
+        </li>
+      ))}
+    </ul>
+    <div className="mt-6">
+      <CTA>Start with {name}</CTA>
     </div>
-  );
-}
+  </div>
+);
 
 export default function LocalLinkHome() {
   return (
@@ -77,7 +81,9 @@ export default function LocalLinkHome() {
               <LinkIcon size={22} color={colors.teal} />
             </div>
             <div className="leading-tight">
-              <div className="text-xl font-bold" style={{ color: colors.navy }}>LocalLink <span className="font-medium" style={{ color: colors.teal }}>Digital</span></div>
+              <div className="text-xl font-bold" style={{ color: colors.navy }}>
+                LocalLink <span className="font-medium" style={{ color: colors.teal }}>Digital</span>
+              </div>
               <div className="text-[11px] text-gray-500">Where local business meets modern design</div>
             </div>
           </div>
@@ -97,8 +103,8 @@ export default function LocalLinkHome() {
             Where local business meets <span style={{ color: colors.teal }}>modern design</span>.
           </h1>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-gray-700">
-            We build and maintain professional websites for small businesses.
-          
+            We build and maintain professional websites for small businesses — and keep them <strong>visible on Google, fast, and up to date</strong>.
+            You run the business. We handle the website <em>and</em> the web results.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <CTA />
@@ -160,7 +166,9 @@ export default function LocalLinkHome() {
                 },
               ].map((s, i) => (
                 <li key={i} className="flex gap-4">
-                  <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style={{ background: colors.teal }}>{i + 1}</div>
+                  <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white" style={{ background: colors.teal }}>
+                    {i + 1}
+                  </div>
                   <div>
                     <div className="text-lg font-semibold text-gray-900">{s.t}</div>
                     <div className="mt-1 text-gray-600">{s.d}</div>
@@ -233,7 +241,7 @@ export default function LocalLinkHome() {
               "Basic on-page SEO (titles, meta)",
             ]}
           />
-          <Tier
+            <Tier
             name="Growth"
             setup="$0"
             monthly="$99"
@@ -326,3 +334,4 @@ export default function LocalLinkHome() {
     </div>
   );
 }
+
