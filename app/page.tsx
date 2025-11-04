@@ -2,6 +2,9 @@
 import React from "react";
 import type { LucideIcon } from "lucide-react";
 import { Check, Globe, ShieldCheck, Zap, Phone, Link as LinkIcon, Quote } from "lucide-react";
+import MobileNav from "./components/MobileNav";
+
+
 
 // Local color tokens
 const colors = {
