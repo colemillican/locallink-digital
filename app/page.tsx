@@ -69,7 +69,7 @@ export default function Page() {
       {/* Offset: match mobile header height. Tightened to avoid awkward gap. */}
       <main className="pt-16 sm:pt-0">
         {/* HERO — reduced top padding on mobile to tighten space under nav */}
-        <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 px-4 pt-4 pb-10 sm:grid-cols-2 sm:px-6 sm:py-16 lg:gap-14 lg:px-8">
+        <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 px-4 pt-2 pb-10 sm:grid-cols-2 sm:px-6 sm:py-16 lg:gap-14 lg:px-8">
           {/* Left: concise on mobile */}
           <div>
             <h1 className="text-[clamp(32px,6vw,56px)] font-extrabold leading-[1.05] tracking-[-0.02em] text-zinc-900">
