@@ -1,3 +1,22 @@
+export default function Page() {
+  return (
+    <>
+      {/* Mobile-only test bar (hidden at ≥640px) */}
+      <div className="sm:hidden fixed top-0 left-0 right-0 z-[9999] h-16 bg-red-600 text-white text-center flex items-center justify-center font-bold">
+        MOBILE TEST BAR — SHOULD ONLY APPEAR ON PHONES
+      </div>
+
+      {/* Push content down so the fixed bar doesn’t cover it on mobile */}
+      <div className="sm:hidden h-16" />
+
+      {/* Existing mobile nav (optional to keep) */}
+      <MobileNav />
+
+      {/* rest of your page… */}
+    </>
+  );
+}
+
 "use client";
 import React from "react";
 import type { LucideIcon } from "lucide-react";
