@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
+/* Inline logo */
 function LogoMark({ size = 28 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-label="LocalLink Digital logo">
@@ -19,20 +20,21 @@ function LogoMark({ size = 28 }: { size?: number }) {
 export default function MobileNav() {
   const [open, setOpen] = useState(false);
 
-  // lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
   return (
-    // mobile-only: hidden at ≥640px
-    <header className="sm:hidden sticky top-0 z-[300] border-b bg-white/90 backdrop-blur">
+    // mobile-only
+    <header className="sm:hidden sticky top-0 z-[300] border-b bg-white shadow-sm">
       <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-4">
         {/* Logo + brand */}
         <a href="/" className="flex items-center gap-2">
           <LogoMark size={28} />
-          <span className="text-[15px] font-semibold tracking-tight">LocalLink <span className="font-normal text-zinc-500">Digital</span></span>
+          <span className="text-[15px] font-semibold tracking-tight">
+            LocalLink <span className="font-normal text-zinc-500">Digital</span>
+          </span>
         </a>
 
         {/* Hamburger */}
@@ -52,7 +54,7 @@ export default function MobileNav() {
       {open && (
         <div className="fixed inset-0 z-[400] bg-black/40" onClick={() => setOpen(false)}>
           <div
-            className="ml-auto h-full w-80 max-w-[85%] bg-white p-6"
+            className="ml-auto h-full w-80 max-w-[85%] bg-white p-6 shadow-xl"
             onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -86,6 +88,8 @@ export default function MobileNav() {
     </header>
   );
 }
+
+
 
 
 
