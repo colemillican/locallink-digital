@@ -1,70 +1,189 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
+/**
+ * Renders a fixed, top nav directly into document.body to avoid
+ * any parent stacking/overflow/transform issues. Includes inline
+ * styles so it is visible even if Tailwind isn't applied.
+ */
 export default function MobileNav() {
+  const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // lock body scroll when menu is open
+  // Create a container div we can portal into (once mounted)
+  const container = useMemo(() => {
+    if (typeof document === "undefined") return null;
+    const el = document.createElement("div");
+    el.setAttribute("id", "mobile-nav-portal");
+    return el;
+  }, []);
+
+  useEffect(() => {
+    setMounted(true);
+    if (!container) return;
+    document.body.appendChild(container);
+    return () => {
+      try {
+        document.body.removeChild(container);
+      } catch {}
+    };
+  }, [container]);
+
+  // Lock body scroll when open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
-  return (
-    // mobile-only (hidden on >= sm)
-    <header className= "block fixed top-0 left-0 right-0 z-[200] border-b-4 border-red-500 bg-white">
-      <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-4">
-        <a href="/" className="text-base font-semibold tracking-tight">
-          LocalLink <span className="font-normal text-zinc-500">Digital</span>
-        </a>
+  // If not mounted yet, render nothing (avoids SSR mismatch)
+  if (!mounted || !container) return null;
 
-        <button
-          aria-label="Open menu"
-          aria-expanded={open}
-          onClick={() => setOpen(true)}
-          className="inline-flex items-center justify-center rounded-md p-2"
+  return createPortal(
+    <>
+      {/* MOBILE-ONLY: hide ≥640px using a minimal inline media query fallback */}
+      <style>{`
+        @media (min-width: 640px) {
+          #mobile-nav-root { display: none !important; }
+        }
+      `}</style>
+
+      {/* Root wrapper with inline styles so we can see it even without Tailwind */}
+      <div
+        id="mobile-nav-root"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 9999,              // above everything
+          background: "rgba(255,255,255,0.95)",
+          WebkitBackdropFilter: "saturate(150%) blur(8px)",
+          backdropFilter: "saturate(150%) blur(8px)",
+          borderBottom: "1px solid rgba(0,0,0,0.08)",
+        }}
+      >
+        <div
+          style={{
+            height: 64,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0 16px",
+            maxWidth: 1280,
+            margin: "0 auto",
+          }}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24">
-            <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-          </svg>
-        </button>
+          <a
+            href="/"
+            style={{ fontWeight: 700, letterSpacing: "-0.01em", color: "#0a0a0a", textDecoration: "none" }}
+          >
+            LocalLink <span style={{ fontWeight: 500, color: "#71717a" }}>Digital</span>
+          </a>
+
+          <button
+            aria-label="Open menu"
+            aria-expanded={open}
+            onClick={() => setOpen(true)}
+            style={{
+              padding: 8,
+              borderRadius: 8,
+              border: "none",
+              background: "transparent",
+              cursor: "pointer",
+            }}
+          >
+            {/* hamburger */}
+            <svg width="24" height="24" viewBox="0 0 24 24">
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
       </div>
 
+      {/* Overlay & sheet (inline styles so it’s visible even without Tailwind) */}
       {open && (
-        <div className="fixed inset-0 z-50 bg-black/40" onClick={() => setOpen(false)}>
+        <div
+          onClick={() => setOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 10000,
+            background: "rgba(0,0,0,0.4)",
+          }}
+        >
           <div
-            className="ml-auto h-full w-80 max-w-[85%] bg-white p-6"
-            onClick={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "absolute",
+              right: 0,
+              top: 0,
+              height: "100%",
+              width: "min(85%, 320px)",
+              background: "#fff",
+              padding: 24,
+              boxShadow: "-8px 0 24px rgba(0,0,0,0.08)",
+            }}
           >
-            <div className="mb-4 flex items-center justify-between">
-              <span className="text-base font-semibold">Menu</span>
-              <button aria-label="Close menu" onClick={() => setOpen(false)} className="p-2">
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
+              <span style={{ fontWeight: 700 }}>Menu</span>
+              <button
+                aria-label="Close menu"
+                onClick={() => setOpen(false)}
+                style={{ padding: 8, borderRadius: 8, border: "none", background: "transparent", cursor: "pointer" }}
+              >
                 <svg width="22" height="22" viewBox="0 0 24 24">
-                  <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 </svg>
               </button>
             </div>
 
-            <nav className="grid gap-2">
-              <a className="rounded-lg px-2 py-2 text-[15px] font-medium hover:bg-zinc-50" href="#work">Work</a>
-              <a className="rounded-lg px-2 py-2 text-[15px] font-medium hover:bg-zinc-50" href="#services">Services</a>
-              <a className="rounded-lg px-2 py-2 text-[15px] font-medium hover:bg-zinc-50" href="#pricing">Pricing</a>
-              <a className="rounded-lg px-2 py-2 text-[15px] font-medium hover:bg-zinc-50" href="#contact">Contact</a>
+            <nav style={{ display: "grid", gap: 8 }}>
+              <a href="#work" style={linkStyle}>Work</a>
+              <a href="#services" style={linkStyle}>Services</a>
+              <a href="#pricing" style={linkStyle}>Pricing</a>
+              <a href="#contact" style={linkStyle}>Contact</a>
             </nav>
 
             <a
               href="#quote"
-              className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-xl bg-black px-4 text-sm font-semibold text-white"
+              style={{
+                marginTop: 20,
+                display: "inline-flex",
+                height: 44,
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 12,
+                background: "#000",
+                color: "#fff",
+                fontWeight: 700,
+                textDecoration: "none",
+              }}
             >
               Get a Quote
             </a>
           </div>
         </div>
       )}
-    </header>
+    </>,
+    container
   );
 }
+
+// simple inline style for links (keeps it obvious even without Tailwind)
+const linkStyle: React.CSSProperties = {
+  padding: "8px 8px",
+  borderRadius: 10,
+  fontSize: 15,
+  fontWeight: 600,
+  color: "#0a0a0a",
+  textDecoration: "none",
+};
+
 
 
