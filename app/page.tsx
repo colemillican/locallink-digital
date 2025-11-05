@@ -3,22 +3,12 @@
 "use client";
 import React from "react";
 import {
-  ArrowRight,
-  BadgeCheck,
-  Bolt,
-  Check,
-  Globe,
-  Link as LinkIcon,
-  Search,
-  ShieldCheck,
-  Smartphone,
+  ArrowRight, BadgeCheck, Bolt, Check, Globe,
+  Link as LinkIcon, Search, ShieldCheck, Smartphone
 } from "lucide-react";
 import MobileNav from "./components/MobileNav";
 
-/* Brand */
 const BRAND = "LocalLink Digital";
-
-/* Simple inline thumbnail generator (data URI) */
 const thumb = (text: string) =>
   `data:image/svg+xml;utf8,${encodeURIComponent(
     `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
@@ -30,24 +20,62 @@ const thumb = (text: string) =>
       </g></svg>`
   )}`;
 
+/* Small logo for desktop header */
+function LogoMark({ size = 28 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 64 64" aria-label={`${BRAND} logo`}>
+      <defs>
+        <linearGradient id="llg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#23B8A5" />
+          <stop offset="100%" stopColor="#9BE564" />
+        </linearGradient>
+      </defs>
+      <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg)" />
+      <path d="M20 20v24h12M32 44h12V20" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    </svg>
+  );
+}
+
 export default function Page() {
   return (
     <>
-      {/* Mobile-only nav with logo */}
+      {/* Mobile-only nav (solid bg) */}
       <MobileNav />
 
-      {/* Offset for mobile sticky header */}
+      {/* Desktop nav */}
+      <header className="hidden sm:block sticky top-0 z-[200] border-b bg-white/95 backdrop-blur">
+        <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
+          <a href="/" className="flex items-center gap-3">
+            <LogoMark />
+            <div className="leading-tight">
+              <div className="text-[15px] font-semibold tracking-tight">{BRAND}</div>
+              <div className="text-[12px] text-zinc-500">Where local business meets modern design</div>
+            </div>
+          </a>
+          <nav className="hidden items-center gap-8 text-[14px] sm:flex">
+            <a href="#work" className="hover:opacity-80">Our Work</a>
+            <a href="#pricing" className="hover:opacity-80">Pricing</a>
+            <a href="#faq" className="hover:opacity-80">FAQ</a>
+            <a
+              href="#preview"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-500/90 px-4 font-semibold text-white hover:bg-emerald-500"
+            >
+              Free Preview
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      {/* Offset: match mobile header height. Tightened to avoid awkward gap. */}
       <main className="pt-16 sm:pt-0">
-        {/* =============================== HERO =============================== */}
-        <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:gap-14 lg:px-8 lg:py-16">
-          {/* Left: headline + minimal CTAs on mobile */}
+        {/* HERO — reduced top padding on mobile to tighten space under nav */}
+        <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 px-4 pt-4 pb-10 sm:grid-cols-2 sm:px-6 sm:py-16 lg:gap-14 lg:px-8">
+          {/* Left: concise on mobile */}
           <div>
             <h1 className="text-[clamp(32px,6vw,56px)] font-extrabold leading-[1.05] tracking-[-0.02em] text-zinc-900">
               Where local business meets{" "}
               <span className="text-emerald-600">modern design</span>.
             </h1>
-
-            {/* Short by default, long text only on ≥sm */}
             <p className="mt-3 text-[15.5px] text-zinc-600 sm:hidden">
               Fast, clean sites that make your phone ring.
             </p>
@@ -74,7 +102,7 @@ export default function Page() {
               </a>
             </div>
 
-            {/* Benefit chips (hide on the smallest if you want ultra-minimal) */}
+            {/* Benefits (hidden only on the very smallest if you like) */}
             <div className="mt-4 hidden flex-wrap items-center gap-x-6 gap-y-2 text-[13.5px] text-zinc-600 xs:flex sm:flex">
               <span className="inline-flex items-center gap-2">
                 <Bolt className="h-4 w-4 text-emerald-600" /> Built in days
@@ -88,7 +116,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: simple image mosaic */}
+          {/* Right: image mosaic */}
           <div className="relative">
             <div className="rounded-3xl border bg-white p-2 shadow-sm">
               <div className="grid aspect-[4/3] grid-cols-2 gap-2 rounded-2xl">
@@ -98,8 +126,6 @@ export default function Page() {
                 <img alt="Thumb D" src={thumb("Lifestyle")} className="h-full w-full rounded-xl object-cover" />
               </div>
             </div>
-
-            {/* Floating tag */}
             <div className="pointer-events-none absolute -bottom-5 left-8 rounded-2xl border bg-white px-4 py-2 text-[12.5px] text-zinc-600 shadow-md">
               <div className="font-medium text-zinc-700">Sample stack</div>
               <div className="mt-1 flex flex-wrap items-center gap-2">
@@ -109,7 +135,7 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ========================= VALUE / FEATURES ========================= */}
+        {/* VALUE / FEATURES */}
         <section className="mx-auto w-full max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-[28px] font-semibold tracking-tight text-zinc-900">
             Why local businesses choose LocalLink
@@ -119,30 +145,14 @@ export default function Page() {
           </p>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <FeatureCard
-              icon={<Bolt className="h-5 w-5 text-emerald-600" />}
-              title="Fast Setup"
-              text="Built in days so you start converting sooner."
-            />
-            <FeatureCard
-              icon={<BadgeCheck className="h-5 w-5 text-emerald-600" />}
-              title="Fully Managed"
-              text="Hosting, updates, backups, and tweaks handled for you."
-            />
-            <FeatureCard
-              icon={<Search className="h-5 w-5 text-emerald-600" />}
-              title="Local SEO"
-              text="On-page SEO, clean metadata, and local structure."
-            />
-            <FeatureCard
-              icon={<Globe className="h-5 w-5 text-emerald-600" />}
-              title="Performance"
-              text="Mobile-first and optimized Core Web Vitals."
-            />
+            <FeatureCard icon={<Bolt className="h-5 w-5 text-emerald-600" />} title="Fast Setup" text="Built in days so you start converting sooner." />
+            <FeatureCard icon={<BadgeCheck className="h-5 w-5 text-emerald-600" />} title="Fully Managed" text="Hosting, updates, backups, and tweaks handled for you." />
+            <FeatureCard icon={<Search className="h-5 w-5 text-emerald-600" />} title="Local SEO" text="On-page SEO, clean metadata, and local structure." />
+            <FeatureCard icon={<Globe className="h-5 w-5 text-emerald-600" />} title="Performance" text="Mobile-first and optimized Core Web Vitals." />
           </div>
         </section>
 
-        {/* =============================== WORK =============================== */}
+        {/* OUR WORK */}
         <section id="work" className="scroll-mt-24 mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="mb-6 flex items-end justify-between">
             <h3 className="text-2xl font-semibold tracking-tight">Our Work</h3>
@@ -172,7 +182,7 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ============================== PRICING ============================= */}
+        {/* PRICING */}
         <section id="pricing" className="scroll-mt-24 mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-semibold tracking-tight">Simple pricing</h3>
           <p className="mt-2 max-w-xl text-zinc-600 hidden sm:block">
@@ -196,7 +206,7 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ================================ FAQ =============================== */}
+        {/* FAQ */}
         <section id="faq" className="mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-semibold tracking-tight">FAQ</h3>
           <div className="mt-4 space-y-3">
@@ -206,7 +216,7 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ============================== PREVIEW ============================ */}
+        {/* PREVIEW / CONTACT */}
         <section id="preview" className="scroll-mt-24 mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:grid-cols-2">
             <div>
@@ -235,17 +245,12 @@ export default function Page() {
           </div>
         </section>
 
-        {/* =============================== FOOTER ============================ */}
+        {/* FOOTER */}
         <footer className="border-t bg-white/70 backdrop-blur">
           <div className="mx-auto w-full max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
               <div className="flex items-center gap-3">
-                {/* small logo */}
-                <svg width="26" height="26" viewBox="0 0 64 64" aria-label={`${BRAND} logo`}>
-                  <defs><linearGradient id="llg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#23B8A5" /><stop offset="100%" stopColor="#9BE564" /></linearGradient></defs>
-                  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg)" />
-                  <path d="M20 20v24h12M32 44h12V20" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                </svg>
+                <LogoMark size={26} />
                 <div className="text-sm">
                   <div className="font-semibold">{BRAND}</div>
                   <div className="text-zinc-500">Websites for local business</div>
@@ -281,33 +286,17 @@ function FeatureCard({ icon, title, text }: { icon: React.ReactNode; title: stri
 }
 
 function PriceCard({
-  name,
-  price,
-  note,
-  features,
-  highlight,
-}: {
-  name: string;
-  price: string;
-  note?: string;
-  features: string[];
-  highlight?: boolean;
-}) {
+  name, price, note, features, highlight,
+}: { name: string; price: string; note?: string; features: string[]; highlight?: boolean; }) {
   return (
-    <div
-      className={[
-        "rounded-2xl border bg-white p-6",
-        highlight ? "ring-1 ring-emerald-300 border-emerald-200 bg-emerald-50/30" : "",
-      ].join(" ")}
-    >
+    <div className={["rounded-2xl border bg-white p-6", highlight ? "ring-1 ring-emerald-300 border-emerald-200 bg-emerald-50/30" : ""].join(" ")}>
       <div className="flex items-center justify-between">
         <h4 className="text-lg font-semibold">{name}</h4>
         {highlight ? <span className="rounded-full bg-emerald-500/90 px-2 py-[2px] text-[11px] font-semibold text-white">Popular</span> : null}
       </div>
       <p className="mt-1 text-sm text-zinc-600">Simple monthly plan</p>
       <p className="mt-4 text-3xl font-bold">
-        {price}
-        <span className="text-base font-medium text-zinc-500">{note}</span>
+        {price}<span className="text-base font-medium text-zinc-500">{note}</span>
       </p>
       <ul className="mt-4 space-y-2 text-sm text-zinc-800">
         {features.map((f, i) => (
@@ -332,6 +321,7 @@ function Faq({ q, a }: { q: string; a: string }) {
     </details>
   );
 }
+
 
 
 
