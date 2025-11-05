@@ -9,102 +9,51 @@ import {
   Check,
   Globe,
   Link as LinkIcon,
-  Lock,
-  Rocket,
   Search,
   ShieldCheck,
   Smartphone,
 } from "lucide-react";
 import MobileNav from "./components/MobileNav";
 
-/* ----------------------------- Brand + tokens ----------------------------- */
+/* Brand */
 const BRAND = "LocalLink Digital";
-const colors = {
-  brand: "#23B8A5", // teal
-  dark: "#0F1D2B",
-  text: "#0f172a",
-  sub: "#475569",
-  card: "#F6F7F8",
-};
 
-/* ------------------------------ Inline logo ------------------------------- */
-function LogoMark({ size = 28 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 64 64" aria-label={`${BRAND} logo`}>
-      <defs>
-        <linearGradient id="llg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#23B8A5" />
-          <stop offset="100%" stopColor="#9BE564" />
-        </linearGradient>
-      </defs>
-      <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg)" />
-      <path d="M20 20v24h12M32 44h12V20" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    </svg>
-  );
-}
-
-/* ---------------------- Tiny data-URI thumbnail helper --------------------- */
+/* Simple inline thumbnail generator (data URI) */
 const thumb = (text: string) =>
   `data:image/svg+xml;utf8,${encodeURIComponent(
     `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
-      <defs>
-        <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
-          <stop offset='0%' stop-color='#e5f7f3'/>
-          <stop offset='100%' stop-color='#dff2ff'/>
-        </linearGradient>
-      </defs>
+      <defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+        <stop offset='0%' stop-color='#e5f7f3'/><stop offset='100%' stop-color='#dff2ff'/></linearGradient></defs>
       <rect width='100%' height='100%' rx='24' fill='url(#g)'/>
       <g font-family='Inter, system-ui, -apple-system, Segoe UI, Roboto' fill='#0f172a' text-anchor='middle'>
         <text x='400' y='320' font-size='38' font-weight='700'>${text}</text>
-      </g>
-    </svg>`
+      </g></svg>`
   )}`;
 
-/* --------------------------------- Page ---------------------------------- */
 export default function Page() {
   return (
     <>
-      {/* Mobile-only header (you already have this component) */}
+      {/* Mobile-only nav with logo */}
       <MobileNav />
-
-      {/* Desktop header */}
-      <header className="hidden sm:block sticky top-0 z-[80] border-b bg-white/80 backdrop-blur">
-        <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
-          <a href="/" className="flex items-center gap-3">
-            <LogoMark />
-            <div className="leading-tight">
-              <div className="text-[15px] font-semibold tracking-tight">{BRAND}</div>
-              <div className="text-[12px] text-zinc-500">Where local business meets modern design</div>
-            </div>
-          </a>
-          <nav className="hidden items-center gap-8 text-[14px] sm:flex">
-            <a href="#work" className="hover:opacity-80">Our Work</a>
-            <a href="#pricing" className="hover:opacity-80">Pricing</a>
-            <a href="#faq" className="hover:opacity-80">FAQ</a>
-            <a
-              href="#preview"
-              className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-500/90 px-4 font-semibold text-white hover:bg-emerald-500"
-            >
-              Free Preview
-            </a>
-          </nav>
-        </div>
-      </header>
 
       {/* Offset for mobile sticky header */}
       <main className="pt-16 sm:pt-0">
         {/* =============================== HERO =============================== */}
-        <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-10 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:gap-14 lg:px-8 lg:py-16">
-          {/* Left copy */}
+        <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:gap-14 lg:px-8 lg:py-16">
+          {/* Left: headline + minimal CTAs on mobile */}
           <div>
             <h1 className="text-[clamp(32px,6vw,56px)] font-extrabold leading-[1.05] tracking-[-0.02em] text-zinc-900">
               Where local business meets{" "}
               <span className="text-emerald-600">modern design</span>.
             </h1>
 
-            <p className="mt-4 max-w-xl text-[15.5px] leading-7 text-zinc-600">
-              We build and maintain professional websites for small businesses—and keep them{" "}
-              <strong className="text-zinc-800 font-semibold">visible on Google</strong>,{" "}
+            {/* Short by default, long text only on ≥sm */}
+            <p className="mt-3 text-[15.5px] text-zinc-600 sm:hidden">
+              Fast, clean sites that make your phone ring.
+            </p>
+            <p className="mt-4 hidden max-w-xl text-[15.5px] leading-7 text-zinc-600 sm:block">
+              We build and maintain professional websites for small businesses—and keep them
+              <strong className="text-zinc-800 font-semibold"> visible on Google</strong>,{" "}
               <strong className="text-zinc-800 font-semibold">fast</strong>, and{" "}
               <strong className="text-zinc-800 font-semibold">up to date</strong>. You run the business.
               We handle the website <em>and</em> the web results.
@@ -115,7 +64,7 @@ export default function Page() {
                 href="#preview"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-500 px-6 text-[15px] font-semibold text-white shadow-sm hover:bg-emerald-600"
               >
-                Get Your Free Website Preview
+                Get Your Free Preview
               </a>
               <a
                 href="#pricing"
@@ -125,10 +74,10 @@ export default function Page() {
               </a>
             </div>
 
-            {/* Benefit chips */}
-            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13.5px] text-zinc-600">
+            {/* Benefit chips (hide on the smallest if you want ultra-minimal) */}
+            <div className="mt-4 hidden flex-wrap items-center gap-x-6 gap-y-2 text-[13.5px] text-zinc-600 xs:flex sm:flex">
               <span className="inline-flex items-center gap-2">
-                <Rocket className="h-4 w-4 text-emerald-600" /> Built in days
+                <Bolt className="h-4 w-4 text-emerald-600" /> Built in days
               </span>
               <span className="inline-flex items-center gap-2">
                 <ShieldCheck className="h-4 w-4 text-emerald-600" /> Fully managed
@@ -139,7 +88,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right mosaic card */}
+          {/* Right: simple image mosaic */}
           <div className="relative">
             <div className="rounded-3xl border bg-white p-2 shadow-sm">
               <div className="grid aspect-[4/3] grid-cols-2 gap-2 rounded-2xl">
@@ -150,7 +99,7 @@ export default function Page() {
               </div>
             </div>
 
-            {/* Floating “Sample stack” bubble */}
+            {/* Floating tag */}
             <div className="pointer-events-none absolute -bottom-5 left-8 rounded-2xl border bg-white px-4 py-2 text-[12.5px] text-zinc-600 shadow-md">
               <div className="font-medium text-zinc-700">Sample stack</div>
               <div className="mt-1 flex flex-wrap items-center gap-2">
@@ -165,15 +114,15 @@ export default function Page() {
           <h2 className="text-center text-[28px] font-semibold tracking-tight text-zinc-900">
             Why local businesses choose LocalLink
           </h2>
-          <p className="mx-auto mt-2 max-w-2xl text-center text-[14.5px] text-zinc-600">
+          <p className="mx-auto mt-2 hidden max-w-2xl text-center text-[14.5px] text-zinc-600 sm:block">
             Fast setup. Fully managed. Built to be found. No jargon. No headaches.
           </p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <FeatureCard
               icon={<Bolt className="h-5 w-5 text-emerald-600" />}
               title="Fast Setup"
-              text="Your site built in days, not months—so you can start converting sooner."
+              text="Built in days so you start converting sooner."
             />
             <FeatureCard
               icon={<BadgeCheck className="h-5 w-5 text-emerald-600" />}
@@ -182,13 +131,13 @@ export default function Page() {
             />
             <FeatureCard
               icon={<Search className="h-5 w-5 text-emerald-600" />}
-              title="Local SEO & Keywords"
-              text="On-page SEO, clean metadata, and structure that Google loves."
+              title="Local SEO"
+              text="On-page SEO, clean metadata, and local structure."
             />
             <FeatureCard
               icon={<Globe className="h-5 w-5 text-emerald-600" />}
-              title="Performance & Speed"
-              text="Mobile-first and optimized Core Web Vitals for higher rankings."
+              title="Performance"
+              text="Mobile-first and optimized Core Web Vitals."
             />
           </div>
         </section>
@@ -226,7 +175,7 @@ export default function Page() {
         {/* ============================== PRICING ============================= */}
         <section id="pricing" className="scroll-mt-24 mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <h3 className="text-2xl font-semibold tracking-tight">Simple pricing</h3>
-          <p className="mt-2 max-w-xl text-zinc-600">
+          <p className="mt-2 max-w-xl text-zinc-600 hidden sm:block">
             Flat monthly rates. Cancel anytime. Every plan includes hosting, SSL, and ongoing tweaks.
           </p>
 
@@ -257,12 +206,12 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ============================== CONTACT ============================ */}
+        {/* ============================== PREVIEW ============================ */}
         <section id="preview" className="scroll-mt-24 mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:grid-cols-2">
             <div>
               <h3 className="text-2xl font-semibold tracking-tight">Get your free website preview</h3>
-              <p className="mt-2 max-w-lg text-zinc-600">
+              <p className="mt-2 max-w-lg text-zinc-600 hidden sm:block">
                 Send a few details and we’ll mock up a preview—no obligation. Prefer a call? (555) 123-4567
               </p>
               <ul className="mt-4 space-y-2 text-sm text-zinc-700">
@@ -291,7 +240,12 @@ export default function Page() {
           <div className="mx-auto w-full max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
               <div className="flex items-center gap-3">
-                <LogoMark size={26} />
+                {/* small logo */}
+                <svg width="26" height="26" viewBox="0 0 64 64" aria-label={`${BRAND} logo`}>
+                  <defs><linearGradient id="llg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#23B8A5" /><stop offset="100%" stopColor="#9BE564" /></linearGradient></defs>
+                  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg)" />
+                  <path d="M20 20v24h12M32 44h12V20" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                </svg>
                 <div className="text-sm">
                   <div className="font-semibold">{BRAND}</div>
                   <div className="text-zinc-500">Websites for local business</div>
@@ -378,6 +332,7 @@ function Faq({ q, a }: { q: string; a: string }) {
     </details>
   );
 }
+
 
 
 
