@@ -2,453 +2,309 @@
 
 "use client";
 import React from "react";
-import type { LucideIcon } from "lucide-react";
 import {
+  ArrowRight,
+  BadgeCheck,
+  Bolt,
   Check,
   Globe,
-  ShieldCheck,
-  Zap,
-  Phone,
   Link as LinkIcon,
-  Quote,
-  Mail,
-  MapPin,
-  Clock,
-  ArrowRight,
-  Star,
-  Sparkles,
-  Layout,
+  Lock,
+  Rocket,
+  Search,
+  ShieldCheck,
+  Smartphone,
 } from "lucide-react";
 import MobileNav from "./components/MobileNav";
 
-// Brand
+/* ----------------------------- Brand + tokens ----------------------------- */
 const BRAND = "LocalLink Digital";
-
-// Local color tokens (keep or modify)
 const colors = {
-  navy: "#0F1D2B",
-  teal: "#23B8A5",
-  lime: "#9BE564",
-  warmWhite: "#F8F9FA",
-  slate: "#101827",
+  brand: "#23B8A5", // teal
+  dark: "#0F1D2B",
+  text: "#0f172a",
+  sub: "#475569",
+  card: "#F6F7F8",
 };
 
-// Simple inline logo (monogram)
-function LogoMark({ size = 40 }: { size?: number }) {
+/* ------------------------------ Inline logo ------------------------------- */
+function LogoMark({ size = 28 }: { size?: number }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 64 64"
-      aria-label={`${BRAND} logo`}
-    >
+    <svg width={size} height={size} viewBox="0 0 64 64" aria-label={`${BRAND} logo`}>
       <defs>
         <linearGradient id="llg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor={colors.teal} />
-          <stop offset="100%" stopColor={colors.lime} />
+          <stop offset="0%" stopColor="#23B8A5" />
+          <stop offset="100%" stopColor="#9BE564" />
         </linearGradient>
       </defs>
-      <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#llg)" />
-      <path
-        d="M18 18v28h14M32 46h14V18"
-        stroke="white"
-        strokeWidth="5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
+      <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg)" />
+      <path d="M20 20v24h12M32 44h12V20" stroke="white" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   );
 }
 
+/* ---------------------- Tiny data-URI thumbnail helper --------------------- */
+const thumb = (text: string) =>
+  `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
+      <defs>
+        <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+          <stop offset='0%' stop-color='#e5f7f3'/>
+          <stop offset='100%' stop-color='#dff2ff'/>
+        </linearGradient>
+      </defs>
+      <rect width='100%' height='100%' rx='24' fill='url(#g)'/>
+      <g font-family='Inter, system-ui, -apple-system, Segoe UI, Roboto' fill='#0f172a' text-anchor='middle'>
+        <text x='400' y='320' font-size='38' font-weight='700'>${text}</text>
+      </g>
+    </svg>`
+  )}`;
+
+/* --------------------------------- Page ---------------------------------- */
 export default function Page() {
   return (
     <>
-      {/* Mobile-only nav */}
+      {/* Mobile-only header (you already have this component) */}
       <MobileNav />
 
-      {/* Offset content under the sticky mobile header (64px) */}
+      {/* Desktop header */}
+      <header className="hidden sm:block sticky top-0 z-[80] border-b bg-white/80 backdrop-blur">
+        <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
+          <a href="/" className="flex items-center gap-3">
+            <LogoMark />
+            <div className="leading-tight">
+              <div className="text-[15px] font-semibold tracking-tight">{BRAND}</div>
+              <div className="text-[12px] text-zinc-500">Where local business meets modern design</div>
+            </div>
+          </a>
+          <nav className="hidden items-center gap-8 text-[14px] sm:flex">
+            <a href="#work" className="hover:opacity-80">Our Work</a>
+            <a href="#pricing" className="hover:opacity-80">Pricing</a>
+            <a href="#faq" className="hover:opacity-80">FAQ</a>
+            <a
+              href="#preview"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-500/90 px-4 font-semibold text-white hover:bg-emerald-500"
+            >
+              Free Preview
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      {/* Offset for mobile sticky header */}
       <main className="pt-16 sm:pt-0">
-        {/* ================= HERO ================= */}
-        <section className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-          <div className="grid items-center gap-8 sm:grid-cols-[1.1fr_0.9fr]">
-            <div className="space-y-6">
-              <div className="flex items-center gap-3">
-                <LogoMark size={42} />
-                <div className="leading-tight">
-                  <div className="text-2xl font-bold">{BRAND}</div>
-                  <div className="text-sm text-zinc-500">
-                    Websites that make your phone ring.
-                  </div>
-                </div>
-              </div>
+        {/* =============================== HERO =============================== */}
+        <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-10 px-4 py-10 sm:grid-cols-2 sm:px-6 lg:gap-14 lg:px-8 lg:py-16">
+          {/* Left copy */}
+          <div>
+            <h1 className="text-[clamp(32px,6vw,56px)] font-extrabold leading-[1.05] tracking-[-0.02em] text-zinc-900">
+              Where local business meets{" "}
+              <span className="text-emerald-600">modern design</span>.
+            </h1>
 
-              <h1 className="font-semibold leading-tight [font-size:clamp(1.9rem,5vw,3.2rem)]">
-                Where local business meets modern design.
-              </h1>
+            <p className="mt-4 max-w-xl text-[15.5px] leading-7 text-zinc-600">
+              We build and maintain professional websites for small businesses—and keep them{" "}
+              <strong className="text-zinc-800 font-semibold">visible on Google</strong>,{" "}
+              <strong className="text-zinc-800 font-semibold">fast</strong>, and{" "}
+              <strong className="text-zinc-800 font-semibold">up to date</strong>. You run the business.
+              We handle the website <em>and</em> the web results.
+            </p>
 
-              <p className="text-zinc-600 [font-size:clamp(1rem,2.6vw,1.125rem)]">
-                We build fast, clean websites for home-service and local
-                businesses—with simple pricing and same-week launches.
-              </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+              <a
+                href="#preview"
+                className="inline-flex h-12 items-center justify-center rounded-full bg-emerald-500 px-6 text-[15px] font-semibold text-white shadow-sm hover:bg-emerald-600"
+              >
+                Get Your Free Website Preview
+              </a>
+              <a
+                href="#pricing"
+                className="inline-flex h-12 items-center justify-center rounded-full border border-zinc-300 px-5 text-[15px] font-semibold text-zinc-800 hover:bg-zinc-50"
+              >
+                See pricing <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <a
-                  href="#quote"
-                  className="inline-flex h-11 items-center justify-center rounded-xl bg-black px-5 text-white font-semibold"
-                >
-                  Get a Quote <ArrowRight className="ml-2 h-4 w-4" />
-                </a>
-                <a
-                  href="#work"
-                  className="inline-flex h-11 items-center justify-center rounded-xl border px-5 font-semibold"
-                >
-                  See Work
-                </a>
-              </div>
+            {/* Benefit chips */}
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-[13.5px] text-zinc-600">
+              <span className="inline-flex items-center gap-2">
+                <Rocket className="h-4 w-4 text-emerald-600" /> Built in days
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <ShieldCheck className="h-4 w-4 text-emerald-600" /> Fully managed
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <Smartphone className="h-4 w-4 text-emerald-600" /> Mobile-first
+              </span>
+            </div>
+          </div>
 
-              <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-600">
-                <div className="inline-flex items-center gap-2">
-                  <ShieldCheck className="h-4 w-4" /> SSL & hosting included
-                </div>
-                <div className="inline-flex items-center gap-2">
-                  <Zap className="h-4 w-4" /> Same-week launch
-                </div>
-                <div className="inline-flex items-center gap-2">
-                  <Globe className="h-4 w-4" /> SEO basics out of the box
-                </div>
+          {/* Right mosaic card */}
+          <div className="relative">
+            <div className="rounded-3xl border bg-white p-2 shadow-sm">
+              <div className="grid aspect-[4/3] grid-cols-2 gap-2 rounded-2xl">
+                <img alt="Thumb A" src={thumb("Shop counter")} className="h-full w-full rounded-xl object-cover" />
+                <img alt="Thumb B" src={thumb("Gallery grid")} className="h-full w-full rounded-xl object-cover" />
+                <img alt="Thumb C" src={thumb("Neutral set")} className="h-full w-full rounded-xl object-cover" />
+                <img alt="Thumb D" src={thumb("Lifestyle")} className="h-full w-full rounded-xl object-cover" />
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-2xl bg-gray-100 h-56 sm:h-96 flex items-center justify-center">
-              {/* Replace with Image if/when you have one */}
-              <div className="text-center">
-                <Sparkles className="mx-auto mb-3 h-8 w-8 text-zinc-400" />
-                <div className="font-medium text-zinc-700">
-                  Project preview area
-                </div>
-                <div className="text-zinc-500 text-sm">
-                  (Swap in a real screenshot later)
-                </div>
+            {/* Floating “Sample stack” bubble */}
+            <div className="pointer-events-none absolute -bottom-5 left-8 rounded-2xl border bg-white px-4 py-2 text-[12.5px] text-zinc-600 shadow-md">
+              <div className="font-medium text-zinc-700">Sample stack</div>
+              <div className="mt-1 flex flex-wrap items-center gap-2">
+                <span>Next.js</span>•<span>Tailwind</span>•<span>Vercel</span>•<span>Stripe</span>•<span>Notion support</span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ============== LOGOS/AS SEEN IN (optional) ============== */}
-        <section className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 lg:px-8 pb-6">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-zinc-500">
-            <div className="text-xs tracking-wide uppercase">Trusted by local brands</div>
-            <div className="h-6 w-px bg-zinc-200 hidden sm:block" />
-            <div className="flex gap-6 opacity-80">
-              <div className="text-sm">Auburn HVAC</div>
-              <div className="text-sm">RiverTown Roofing</div>
-              <div className="text-sm">Pine & Co. Landscaping</div>
-              <div className="text-sm">Tiger Fitness</div>
-            </div>
+        {/* ========================= VALUE / FEATURES ========================= */}
+        <section className="mx-auto w-full max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
+          <h2 className="text-center text-[28px] font-semibold tracking-tight text-zinc-900">
+            Why local businesses choose LocalLink
+          </h2>
+          <p className="mx-auto mt-2 max-w-2xl text-center text-[14.5px] text-zinc-600">
+            Fast setup. Fully managed. Built to be found. No jargon. No headaches.
+          </p>
+
+          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <FeatureCard
+              icon={<Bolt className="h-5 w-5 text-emerald-600" />}
+              title="Fast Setup"
+              text="Your site built in days, not months—so you can start converting sooner."
+            />
+            <FeatureCard
+              icon={<BadgeCheck className="h-5 w-5 text-emerald-600" />}
+              title="Fully Managed"
+              text="Hosting, updates, backups, and tweaks handled for you."
+            />
+            <FeatureCard
+              icon={<Search className="h-5 w-5 text-emerald-600" />}
+              title="Local SEO & Keywords"
+              text="On-page SEO, clean metadata, and structure that Google loves."
+            />
+            <FeatureCard
+              icon={<Globe className="h-5 w-5 text-emerald-600" />}
+              title="Performance & Speed"
+              text="Mobile-first and optimized Core Web Vitals for higher rankings."
+            />
           </div>
         </section>
 
-        {/* ================= WORK ================= */}
-        <section
-          id="work"
-          className="scroll-mt-24 sm:scroll-mt-0 mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12"
-        >
+        {/* =============================== WORK =============================== */}
+        <section id="work" className="scroll-mt-24 mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="mb-6 flex items-end justify-between">
-            <h2 className="text-2xl font-semibold">Recent Work</h2>
-            <a href="#quote" className="hidden sm:inline-flex items-center text-sm font-semibold">
-              Start your project <ArrowRight className="ml-1 h-4 w-4" />
+            <h3 className="text-2xl font-semibold tracking-tight">Our Work</h3>
+            <a href="#preview" className="hidden sm:inline-flex items-center text-sm font-semibold">
+              Get a free preview <ArrowRight className="ml-1 h-4 w-4" />
             </a>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              {
-                title: "Auburn HVAC",
-                desc: "High-intent landing page with call tracking and sticky CTA.",
-                badge: "Home Services",
-              },
-              {
-                title: "RiverTown Roofing",
-                desc: "Before/after gallery + quote form that converts.",
-                badge: "Roofing",
-              },
-              {
-                title: "Pine & Co. Landscaping",
-                desc: "Services grid, reviews, and seasonal specials.",
-                badge: "Landscaping",
-              },
-              {
-                title: "Tiger Fitness",
-                desc: "Timetables, trainer bios, and intro offer flow.",
-                badge: "Fitness",
-              },
-              {
-                title: "Auto Shine Detailers",
-                desc: "Package compare table + click-to-call buttons.",
-                badge: "Auto",
-              },
-              {
-                title: "BrightSpark Electric",
-                desc: "Emergency CTA + service area SEO pages.",
-                badge: "Electric",
-              },
-            ].map((card, i) => (
-              <article key={i} className="group rounded-2xl border p-5 hover:shadow-sm transition">
-                <div className="mb-3 flex items-center gap-2">
-                  <span className="inline-flex items-center rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-700">
-                    {card.badge}
-                  </span>
-                </div>
-                <div className="h-36 rounded-xl bg-zinc-100 mb-3 grid place-items-center text-zinc-500">
-                  {/* image placeholder */}
-                  Preview
-                </div>
-                <h3 className="text-lg font-semibold">{card.title}</h3>
-                <p className="mt-1 text-sm text-zinc-600">{card.desc}</p>
-                <div className="mt-3 inline-flex items-center text-sm font-semibold">
-                  View details <ArrowRight className="ml-1 h-4 w-4" />
+              { tag: "Home Services", title: "Auburn HVAC", blurb: "High-intent landing page with sticky click-to-call." },
+              { tag: "Roofing", title: "RiverTown Roofing", blurb: "Before/after gallery + quote form that converts." },
+              { tag: "Landscaping", title: "Pine & Co. Landscaping", blurb: "Services grid, reviews, seasonal promos." },
+              { tag: "Fitness", title: "Tiger Fitness", blurb: "Timetable, trainer bios, intro offer flow." },
+              { tag: "Auto", title: "Auto Shine Detailers", blurb: "Package compare table + tracked calls." },
+              { tag: "Electric", title: "BrightSpark Electric", blurb: "Emergency CTA + local service pages." },
+            ].map((c, i) => (
+              <article key={i} className="group overflow-hidden rounded-2xl border bg-white">
+                <img alt={`${c.title} preview`} src={thumb(c.title)} className="h-40 w-full object-cover" />
+                <div className="p-5">
+                  <span className="inline-block rounded-md bg-zinc-100 px-2 py-1 text-[12px] font-medium text-zinc-700">{c.tag}</span>
+                  <h4 className="mt-2 text-lg font-semibold">{c.title}</h4>
+                  <p className="mt-1 text-sm text-zinc-600">{c.blurb}</p>
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        {/* ================= SERVICES ================= */}
-        <section
-          id="services"
-          className="scroll-mt-24 sm:scroll-mt-0 mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12"
-        >
-          <h2 className="text-2xl font-semibold mb-6">Services</h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <ServiceCard
-              icon={Layout}
-              title="Website Build"
-              items={[
-                "Modern, mobile-first design",
-                "Same-week launch option",
-                "Hosting + SSL included",
-              ]}
-            />
-            <ServiceCard
-              icon={LinkIcon}
-              title="SEO Basics"
-              items={[
-                "Clean metadata & semantics",
-                "Fast load & core web vitals",
-                "Local schema & best practices",
-              ]}
-            />
-            <ServiceCard
-              icon={Zap}
-              title="Conversion Setup"
-              items={[
-                "Sticky CTAs & forms",
-                "Click-to-call & tracking",
-                "Review/social proof blocks",
-              ]}
-            />
-          </div>
-        </section>
+        {/* ============================== PRICING ============================= */}
+        <section id="pricing" className="scroll-mt-24 mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-semibold tracking-tight">Simple pricing</h3>
+          <p className="mt-2 max-w-xl text-zinc-600">
+            Flat monthly rates. Cancel anytime. Every plan includes hosting, SSL, and ongoing tweaks.
+          </p>
 
-        {/* ================= PROCESS ================= */}
-        <section className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-2xl font-semibold mb-6">Our Simple Process</h2>
-          <ol className="grid gap-4 sm:grid-cols-3">
-            {[
-              {
-                step: "1",
-                title: "Plan",
-                desc: "Quick call to understand goals, services, and local area.",
-              },
-              {
-                step: "2",
-                title: "Build",
-                desc: "We design & set up a clean, fast site with clear CTAs.",
-              },
-              {
-                step: "3",
-                title: "Launch",
-                desc: "Go live, track calls, and adjust based on results.",
-              },
-            ].map((s) => (
-              <li key={s.step} className="rounded-2xl border p-6">
-                <div className="mb-3 inline-flex h-7 w-7 items-center justify-center rounded-full bg-zinc-100 text-sm font-semibold">
-                  {s.step}
-                </div>
-                <div className="text-lg font-semibold">{s.title}</div>
-                <p className="mt-1 text-sm text-zinc-600">{s.desc}</p>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        {/* ================= TESTIMONIALS ================= */}
-        <section className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-2xl font-semibold mb-6">What Clients Say</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {[
-              {
-                quote:
-                  "Our calls doubled after launch. Customers say the site is easy to use and we love the quick tweaks.",
-                name: "Mason R.",
-                role: "Owner, RiverTown Roofing",
-              },
-              {
-                quote:
-                  "They built it fast and it looks sharp on mobile. The click-to-call button is a game-changer.",
-                name: "Tara L.",
-                role: "Manager, Auburn HVAC",
-              },
-            ].map((t, i) => (
-              <blockquote key={i} className="rounded-2xl border p-6">
-                <div className="mb-3 flex items-center gap-2 text-amber-500">
-                  <Star className="h-4 w-4" />
-                  <Star className="h-4 w-4" />
-                  <Star className="h-4 w-4" />
-                  <Star className="h-4 w-4" />
-                  <Star className="h-4 w-4" />
-                </div>
-                <Quote className="h-5 w-5 text-zinc-400" />
-                <p className="mt-2 text-zinc-700">{t.quote}</p>
-                <footer className="mt-3 text-sm text-zinc-500">
-                  — {t.name}, {t.role}
-                </footer>
-              </blockquote>
-            ))}
-          </div>
-        </section>
-
-        {/* ================= PRICING ================= */}
-        <section
-          id="pricing"
-          className="scroll-mt-24 sm:scroll-mt-0 mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12"
-        >
-          <h2 className="text-2xl font-semibold mb-6">Pricing</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <PriceCard
               name="Starter"
               price="$49"
               note="/mo"
-              features={[
-                "Mobile-first website",
-                "Hosting + SSL",
-                "SEO basics",
-                "2 revisions / mo",
-              ]}
-              highlight={false}
+              features={["Mobile-first website", "Hosting + SSL", "Local SEO basics", "2 tweaks / mo"]}
             />
             <PriceCard
               name="Growth"
               price="$149"
               note="/mo"
-              features={[
-                "Everything in Starter",
-                "Priority tweaks",
-                "Analytics & call tracking",
-                "Quarterly CRO tune-ups",
-              ]}
               highlight
+              features={["Everything in Starter", "Priority support", "Analytics & call tracking", "Quarterly CRO tune-ups"]}
             />
           </div>
         </section>
 
-        {/* ================= FAQ ================= */}
-        <section className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12">
-          <h2 className="text-2xl font-semibold mb-6">FAQ</h2>
-          <div className="space-y-3">
-            <Faq q="How fast can you launch?" a="Most sites launch within a week once we have your logo, service list, and contact details." />
-            <Faq q="Can you help with content?" a="Yes—give us bullet points and we’ll draft clean, on-brand copy." />
-            <Faq q="Do you work with non-service businesses?" a="We focus on local and home-service brands, but we’re happy to chat." />
+        {/* ================================ FAQ =============================== */}
+        <section id="faq" className="mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
+          <h3 className="text-2xl font-semibold tracking-tight">FAQ</h3>
+          <div className="mt-4 space-y-3">
+            <Faq q="How fast can you launch?" a="Most sites launch within a week once we have your logo, services, and contact details." />
+            <Faq q="Can you help with content?" a="Yes—share bullet points and we’ll draft clean, on-brand copy for you." />
+            <Faq q="Do you work with non-service businesses?" a="We mainly serve local and home-service brands, but we’re happy to chat." />
           </div>
         </section>
 
-        {/* ================= CONTACT / QUOTE ================= */}
-        <section
-          id="contact"
-          className="scroll-mt-24 sm:scroll-mt-0 mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12"
-        >
+        {/* ============================== CONTACT ============================ */}
+        <section id="preview" className="scroll-mt-24 mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:grid-cols-2">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold">Let’s get you live</h2>
-              <p className="text-zinc-600">
-                Send a few details and we’ll reply same day. Prefer a call?
+            <div>
+              <h3 className="text-2xl font-semibold tracking-tight">Get your free website preview</h3>
+              <p className="mt-2 max-w-lg text-zinc-600">
+                Send a few details and we’ll mock up a preview—no obligation. Prefer a call? (555) 123-4567
               </p>
-              <div className="space-y-2 text-sm text-zinc-600">
-                <div className="inline-flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
-                  <span>(555) 123-4567</span>
-                </div>
-                <div className="inline-flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
-                  <span>hello@locallink.digital</span>
-                </div>
-                <div className="inline-flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  <span>Auburn, AL</span>
-                </div>
-                <div className="inline-flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  <span>Mon–Fri, 9–5 CT</span>
-                </div>
-              </div>
+              <ul className="mt-4 space-y-2 text-sm text-zinc-700">
+                <li className="inline-flex items-center gap-2"><Check className="h-4 w-4 text-emerald-600" /> No setup fee</li>
+                <li className="inline-flex items-center gap-2"><Check className="h-4 w-4 text-emerald-600" /> Cancel anytime</li>
+                <li className="inline-flex items-center gap-2"><Check className="h-4 w-4 text-emerald-600" /> Same-week launch option</li>
+              </ul>
             </div>
 
-            <form id="quote" className="max-w-xl space-y-3">
-              <input
-                className="h-11 w-full rounded-xl border px-3 text-[16px]"
-                type="text"
-                name="name"
-                placeholder="Name"
-              />
-              <input
-                className="h-11 w-full rounded-xl border px-3 text-[16px]"
-                type="tel"
-                name="phone"
-                inputMode="tel"
-                placeholder="Phone"
-              />
-              <input
-                className="h-11 w-full rounded-xl border px-3 text-[16px]"
-                type="email"
-                name="email"
-                placeholder="Email"
-              />
-              <textarea
-                className="min-h-[120px] w-full rounded-xl border p-3 text-[16px]"
-                placeholder="Tell us about your business and what you need"
-              />
-              <button className="h-11 w-full rounded-xl bg-black text-white font-semibold">
-                Request Quote
+            <form className="max-w-xl space-y-3">
+              <input className="h-11 w-full rounded-xl border px-3 text-[16px]" placeholder="Business name" />
+              <input className="h-11 w-full rounded-xl border px-3 text-[16px]" placeholder="Your name" />
+              <input className="h-11 w-full rounded-xl border px-3 text-[16px]" type="email" placeholder="Email" />
+              <input className="h-11 w-full rounded-xl border px-3 text-[16px]" type="tel" inputMode="tel" placeholder="Phone" />
+              <textarea className="min-h-[120px] w-full rounded-xl border p-3 text-[16px]" placeholder="Tell us what you do & where you serve" />
+              <button className="h-11 w-full rounded-full bg-emerald-500 font-semibold text-white hover:bg-emerald-600">
+                Request Preview
               </button>
-              <p className="text-xs text-zinc-500">
-                By submitting, you agree to be contacted about your project.
-              </p>
+              <p className="text-xs text-zinc-500">By submitting, you agree to be contacted about your project.</p>
             </form>
           </div>
         </section>
 
-        {/* ================= FOOTER ================= */}
+        {/* =============================== FOOTER ============================ */}
         <footer className="border-t bg-white/70 backdrop-blur">
-          <div className="mx-auto w-full max-w-screen-xl px-4 sm:px-6 lg:px-8 py-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <div className="mx-auto w-full max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
               <div className="flex items-center gap-3">
-                <LogoMark size={32} />
+                <LogoMark size={26} />
                 <div className="text-sm">
                   <div className="font-semibold">{BRAND}</div>
                   <div className="text-zinc-500">Websites for local business</div>
                 </div>
               </div>
               <nav className="flex flex-wrap items-center gap-4 text-sm">
-                <a href="#work" className="hover:opacity-80">Work</a>
-                <a href="#services" className="hover:opacity-80">Services</a>
+                <a href="#work" className="hover:opacity-80">Our Work</a>
                 <a href="#pricing" className="hover:opacity-80">Pricing</a>
-                <a href="#contact" className="hover:opacity-80">Contact</a>
+                <a href="#faq" className="hover:opacity-80">FAQ</a>
+                <a href="#preview" className="hover:opacity-80">Free Preview</a>
               </nav>
             </div>
-            <div className="mt-6 text-xs text-zinc-500">
-              © {new Date().getFullYear()} {BRAND}. All rights reserved.
-            </div>
+            <div className="mt-6 text-xs text-zinc-500">© {new Date().getFullYear()} {BRAND}. All rights reserved.</div>
           </div>
         </footer>
       </main>
@@ -456,31 +312,16 @@ export default function Page() {
   );
 }
 
-/* =================== Small components =================== */
+/* ------------------------------ UI components ----------------------------- */
 
-function ServiceCard({
-  icon: Icon,
-  title,
-  items,
-}: {
-  icon: LucideIcon;
-  title: string;
-  items: string[];
-}) {
+function FeatureCard({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) {
   return (
-    <div className="rounded-2xl border p-6">
+    <div className="rounded-2xl border bg-white p-6">
       <div className="mb-3 inline-flex items-center gap-2">
-        <Icon className="h-5 w-5" />
-        <span className="text-lg font-semibold">{title}</span>
+        {icon}
+        <span className="text-[15px] font-semibold">{title}</span>
       </div>
-      <ul className="space-y-2 text-sm text-zinc-700">
-        {items.map((t, i) => (
-          <li key={i} className="inline-flex items-center gap-2">
-            <Check className="h-4 w-4 text-emerald-500" />
-            <span>{t}</span>
-          </li>
-        ))}
-      </ul>
+      <p className="text-[14px] leading-6 text-zinc-600">{text}</p>
     </div>
   );
 }
@@ -501,25 +342,28 @@ function PriceCard({
   return (
     <div
       className={[
-        "rounded-2xl border p-6",
+        "rounded-2xl border bg-white p-6",
         highlight ? "ring-1 ring-emerald-300 border-emerald-200 bg-emerald-50/30" : "",
       ].join(" ")}
     >
-      <h3 className="text-lg font-semibold">{name}</h3>
-      <p className="mt-1 text-sm text-zinc-600">Simple subscription pricing</p>
+      <div className="flex items-center justify-between">
+        <h4 className="text-lg font-semibold">{name}</h4>
+        {highlight ? <span className="rounded-full bg-emerald-500/90 px-2 py-[2px] text-[11px] font-semibold text-white">Popular</span> : null}
+      </div>
+      <p className="mt-1 text-sm text-zinc-600">Simple monthly plan</p>
       <p className="mt-4 text-3xl font-bold">
         {price}
         <span className="text-base font-medium text-zinc-500">{note}</span>
       </p>
-      <ul className="mt-4 space-y-2 text-sm">
+      <ul className="mt-4 space-y-2 text-sm text-zinc-800">
         {features.map((f, i) => (
-          <li key={i}>✓ {f}</li>
+          <li key={i} className="inline-flex items-center gap-2">
+            <Check className="h-4 w-4 text-emerald-600" />
+            <span>{f}</span>
+          </li>
         ))}
       </ul>
-      <a
-        href="#quote"
-        className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-xl bg-black px-4 text-white"
-      >
+      <a href="#preview" className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-full bg-emerald-500 px-4 font-semibold text-white hover:bg-emerald-600">
         Choose
       </a>
     </div>
@@ -528,10 +372,8 @@ function PriceCard({
 
 function Faq({ q, a }: { q: string; a: string }) {
   return (
-    <details className="rounded-2xl border p-4">
-      <summary className="cursor-pointer select-none text-sm font-semibold">
-        {q}
-      </summary>
+    <details className="rounded-2xl border bg-white p-4">
+      <summary className="cursor-pointer select-none text-sm font-semibold">{q}</summary>
       <p className="mt-2 text-sm text-zinc-600">{a}</p>
     </details>
   );
