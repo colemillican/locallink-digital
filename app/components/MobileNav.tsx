@@ -12,7 +12,8 @@ export default function MobileNav() {
 
   return (
     // mobile-only (hidden on >= sm)
-    <header className="sm:hidden sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
+    <header className="<header className="block fixed top-0 left-0 right-0 z-[200] border-b-4 border-red-500 bg-white">
+">
       <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-4">
         <a href="/" className="text-base font-semibold tracking-tight">
           LocalLink <span className="font-normal text-zinc-500">Digital</span>
@@ -66,3 +67,4 @@ export default function MobileNav() {
     </header>
   );
 }
+
