@@ -18,7 +18,7 @@ const thumb = (text: string) =>
       </g></svg>`
   )}`;
 
-/* Small logo for desktop header */
+/* Inline logo for both navs */
 function LogoMark({ size = 28 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-label={`${BRAND} logo`}>
@@ -36,21 +36,21 @@ function LogoMark({ size = 28 }: { size?: number }) {
 
 export default function Page() {
   return (
-    // Force light background on mobile and up
     <div className="min-h-screen bg-white text-zinc-900">
-      {/* Mobile-only nav */}
+      {/* Mobile Nav */}
       <MobileNav />
 
-      {/* Desktop nav (logo + links) */}
+      {/* Desktop Nav */}
       <header className="hidden sm:block sticky top-0 z-[200] border-b bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
+          {/* ✅ Logo beside company name */}
           <a href="/" className="flex items-center gap-3">
-            <LogoMark />
-            <div className="leading-tight">
-              <div className="text-[15px] font-semibold tracking-tight">{BRAND}</div>
-              <div className="text-[12px] text-zinc-500">Where local business meets modern design</div>
-            </div>
+            <LogoMark size={28} />
+            <span className="text-[16px] font-semibold tracking-tight">
+              LocalLink <span className="font-normal text-zinc-500">Digital</span>
+            </span>
           </a>
+
           <nav className="hidden items-center gap-8 text-[14px] sm:flex">
             <a href="#work" className="hover:opacity-80">Our Work</a>
             <a href="#pricing" className="hover:opacity-80">Pricing</a>
@@ -65,11 +65,10 @@ export default function Page() {
         </div>
       </header>
 
-      {/* Offset for mobile header; desktop has its own sticky header */}
+      {/* Main Content */}
       <main className="pt-16 sm:pt-0">
         {/* HERO */}
         <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 px-4 pt-2 pb-10 sm:grid-cols-2 sm:px-6 sm:py-16 lg:gap-14 lg:px-8">
-          {/* Left: concise on mobile */}
           <div>
             <h1 className="text-[clamp(32px,6vw,56px)] font-extrabold leading-[1.05] tracking-[-0.02em] text-zinc-900">
               Where local business meets{" "}
@@ -114,7 +113,7 @@ export default function Page() {
             </div>
           </div>
 
-          {/* Right: image mosaic */}
+          {/* Hero Image */}
           <div className="relative">
             <div className="rounded-3xl border bg-white p-2 shadow-sm">
               <div className="grid aspect-[4/3] grid-cols-2 gap-2 rounded-2xl">
@@ -133,7 +132,7 @@ export default function Page() {
           </div>
         </section>
 
-        {/* VALUE / FEATURES */}
+        {/* WHY LOCAL BUSINESSES CHOOSE US */}
         <section className="mx-auto w-full max-w-screen-xl px-4 py-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-[28px] font-semibold tracking-tight text-zinc-900">
             Why local businesses choose LocalLink
@@ -187,7 +186,7 @@ export default function Page() {
             Flat monthly rates. Cancel anytime. Every plan includes hosting, SSL, and ongoing tweaks.
           </p>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <PriceCard
               name="Starter"
               price="$49"
@@ -214,7 +213,7 @@ export default function Page() {
           </div>
         </section>
 
-        {/* PREVIEW / CONTACT */}
+        {/* CONTACT / PREVIEW */}
         <section id="preview" className="scroll-mt-24 mx-auto w-full max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid gap-8 sm:grid-cols-2">
             <div>
@@ -270,7 +269,6 @@ export default function Page() {
 }
 
 /* ------------------------------ UI components ----------------------------- */
-
 function FeatureCard({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) {
   return (
     <div className="rounded-2xl border bg-white p-6">
@@ -278,47 +276,8 @@ function FeatureCard({ icon, title, text }: { icon: React.ReactNode; title: stri
         {icon}
         <span className="text-[15px] font-semibold">{title}</span>
       </div>
-      <p className="text-[14px] leading-6 text-zinc-600">{text}</p>
-    </div>
-  );
-}
+      <p className="text-[
 
-function PriceCard({
-  name, price, note, features, highlight,
-}: { name: string; price: string; note?: string; features: string[]; highlight?: boolean; }) {
-  return (
-    <div className={["rounded-2xl border bg-white p-6", highlight ? "ring-1 ring-emerald-300 border-emerald-200 bg-emerald-50/30" : ""].join(" ")}>
-      <div className="flex items-center justify-between">
-        <h4 className="text-lg font-semibold">{name}</h4>
-        {highlight ? <span className="rounded-full bg-emerald-500/90 px-2 py-[2px] text-[11px] font-semibold text-white">Popular</span> : null}
-      </div>
-      <p className="mt-1 text-sm text-zinc-600">Simple monthly plan</p>
-      <p className="mt-4 text-3xl font-bold">
-        {price}<span className="text-base font-medium text-zinc-500">{note}</span>
-      </p>
-      <ul className="mt-4 space-y-2 text-sm text-zinc-800">
-        {features.map((f, i) => (
-          <li key={i} className="inline-flex items-center gap-2">
-            <Check className="h-4 w-4 text-emerald-600" />
-            <span>{f}</span>
-          </li>
-        ))}
-      </ul>
-      <a href="#preview" className="mt-5 inline-flex h-11 w-full items-center justify-center rounded-full bg-emerald-500 px-4 font-semibold text-white hover:bg-emerald-600">
-        Choose
-      </a>
-    </div>
-  );
-}
-
-function Faq({ q, a }: { q: string; a: string }) {
-  return (
-    <details className="rounded-2xl border bg-white p-4">
-      <summary className="cursor-pointer select-none text-sm font-semibold">{q}</summary>
-      <p className="mt-2 text-sm text-zinc-600">{a}</p>
-    </details>
-  );
-}
 
 
 
