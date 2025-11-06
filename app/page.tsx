@@ -55,35 +55,55 @@ export default function Page() {
       {/* Mobile Nav (solid white) */}
       <MobileNav />
 
-      {/* Desktop Nav (logo beside company name) */}
-      <header className="hidden sm:block sticky top-0 z-[200] border-b bg-white/95 backdrop-blur">
-        <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
-          <a href="/" className="flex items-center gap-3">
-            <LogoMark size={28} />
-            <span className="text-[16px] font-semibold tracking-tight">
-              LocalLink <span className="font-normal text-zinc-500">Digital</span>
-            </span>
-          </a>
+   {/* Desktop Navigation */}
+<header className="hidden sm:block sticky top-0 z-[200] border-b bg-white/95 backdrop-blur">
+  <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
+    {/* ✅ Logo beside company name */}
+    <a href="/" className="flex items-center gap-3">
+      {/* Inline SVG logo */}
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 64 64"
+        aria-label="LocalLink Digital logo"
+      >
+        <defs>
+          <linearGradient id="llg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor="#23B8A5" />
+            <stop offset="100%" stopColor="#9BE564" />
+          </linearGradient>
+        </defs>
+        <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg)" />
+        <path
+          d="M20 20v24h12M32 44h12V20"
+          stroke="white"
+          strokeWidth="5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+        />
+      </svg>
 
-          <nav className="hidden items-center gap-8 text-[14px] sm:flex">
-            <a href="#work" className="hover:opacity-80">
-              Our Work
-            </a>
-            <a href="#pricing" className="hover:opacity-80">
-              Pricing
-            </a>
-            <a href="#faq" className="hover:opacity-80">
-              FAQ
-            </a>
-            <a
-              href="#preview"
-              className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-500/90 px-4 font-semibold text-white hover:bg-emerald-500"
-            >
-              Free Preview
-            </a>
-          </nav>
-        </div>
-      </header>
+      {/* Text beside logo */}
+      <span className="text-[16px] font-semibold tracking-tight">
+        LocalLink <span className="font-normal text-zinc-500">Digital</span>
+      </span>
+    </a>
+
+    {/* Nav links */}
+    <nav className="hidden items-center gap-8 text-[14px] sm:flex">
+      <a href="#work" className="hover:opacity-80">Our Work</a>
+      <a href="#pricing" className="hover:opacity-80">Pricing</a>
+      <a href="#faq" className="hover:opacity-80">FAQ</a>
+      <a
+        href="#preview"
+        className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-500/90 px-4 font-semibold text-white hover:bg-emerald-500"
+      >
+        Free Preview
+      </a>
+    </nav>
+  </div>
+</header>
 
       {/* Main */}
       <main className="pt-16 sm:pt-0">
