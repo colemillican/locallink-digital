@@ -1,5 +1,3 @@
-
-
 "use client";
 import React from "react";
 import {
@@ -38,11 +36,12 @@ function LogoMark({ size = 28 }: { size?: number }) {
 
 export default function Page() {
   return (
-    <>
-      {/* Mobile-only nav (solid bg) */}
+    // Force light background on mobile and up
+    <div className="min-h-screen bg-white text-zinc-900">
+      {/* Mobile-only nav */}
       <MobileNav />
 
-      {/* Desktop nav */}
+      {/* Desktop nav (logo + links) */}
       <header className="hidden sm:block sticky top-0 z-[200] border-b bg-white/95 backdrop-blur">
         <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
           <a href="/" className="flex items-center gap-3">
@@ -66,10 +65,10 @@ export default function Page() {
         </div>
       </header>
 
-      {/* Offset: match mobile header height. Tightened to avoid awkward gap. */}
+      {/* Offset for mobile header; desktop has its own sticky header */}
       <main className="pt-16 sm:pt-0">
-        {/* HERO — reduced top padding on mobile to tighten space under nav */}
-        <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 px-4 pt-[2px] pb-10 sm:grid-cols-2 sm:px-6 sm:py-16 lg:gap-14 lg:px-8">
+        {/* HERO */}
+        <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 px-4 pt-2 pb-10 sm:grid-cols-2 sm:px-6 sm:py-16 lg:gap-14 lg:px-8">
           {/* Left: concise on mobile */}
           <div>
             <h1 className="text-[clamp(32px,6vw,56px)] font-extrabold leading-[1.05] tracking-[-0.02em] text-zinc-900">
@@ -102,7 +101,6 @@ export default function Page() {
               </a>
             </div>
 
-            {/* Benefits (hidden only on the very smallest if you like) */}
             <div className="mt-4 hidden flex-wrap items-center gap-x-6 gap-y-2 text-[13.5px] text-zinc-600 xs:flex sm:flex">
               <span className="inline-flex items-center gap-2">
                 <Bolt className="h-4 w-4 text-emerald-600" /> Built in days
@@ -189,7 +187,7 @@ export default function Page() {
             Flat monthly rates. Cancel anytime. Every plan includes hosting, SSL, and ongoing tweaks.
           </p>
 
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <PriceCard
               name="Starter"
               price="$49"
@@ -246,7 +244,7 @@ export default function Page() {
         </section>
 
         {/* FOOTER */}
-        <footer className="border-t bg-white/70 backdrop-blur">
+        <footer className="border-t bg-white">
           <div className="mx-auto w-full max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
             <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
               <div className="flex items-center gap-3">
@@ -267,7 +265,7 @@ export default function Page() {
           </div>
         </footer>
       </main>
-    </>
+    </div>
   );
 }
 
@@ -321,6 +319,7 @@ function Faq({ q, a }: { q: string; a: string }) {
     </details>
   );
 }
+
 
 
 
