@@ -26,7 +26,7 @@ const thumb = (text: string) =>
       </g></svg>`
   )}`;
 
-/** Inline logo for both navs */
+/** Logo component (used in footer) */
 function LogoMark({ size = 28 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 64 64" aria-label={`${BRAND} logo`}>
@@ -52,60 +52,62 @@ function LogoMark({ size = 28 }: { size?: number }) {
 export default function Page() {
   return (
     <div className="min-h-screen bg-white text-zinc-900">
-      {/* Mobile Nav (solid white) */}
+      {/* Mobile Nav (you already have the logo there) */}
       <MobileNav />
 
-   {/* Desktop Navigation */}
-<header className="hidden sm:block sticky top-0 z-[200] border-b bg-white/95 backdrop-blur">
-  <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
-    {/* ✅ Logo beside company name */}
-    <a href="/" className="flex items-center gap-3">
-      {/* Inline SVG logo */}
-      <svg
-        width="28"
-        height="28"
-        viewBox="0 0 64 64"
-        aria-label="LocalLink Digital logo"
-      >
-        <defs>
-          <linearGradient id="llg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#23B8A5" />
-            <stop offset="100%" stopColor="#9BE564" />
-          </linearGradient>
-        </defs>
-        <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg)" />
-        <path
-          d="M20 20v24h12M32 44h12V20"
-          stroke="white"
-          strokeWidth="5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-      </svg>
+      {/* ============================ DESKTOP NAV ============================ */}
+      <header className="hidden sm:block sticky top-0 z-[200] border-b bg-white/95 backdrop-blur">
+        <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
+          {/* ✅ Inline SVG logo BESIDE the company name: "local link" */}
+          <a href="/" className="flex items-center gap-3">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 64 64"
+              aria-label="local link logo"
+            >
+              <defs>
+                <linearGradient id="llg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#23B8A5" />
+                  <stop offset="100%" stopColor="#9BE564" />
+                </linearGradient>
+              </defs>
+              <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg)" />
+              <path
+                d="M20 20v24h12M32 44h12V20"
+                stroke="white"
+                strokeWidth="5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+              />
+            </svg>
+            <span className="text-[16px] font-semibold tracking-tight">
+              local link
+            </span>
+          </a>
 
-      {/* Text beside logo */}
-      <span className="text-[16px] font-semibold tracking-tight">
-        LocalLink <span className="font-normal text-zinc-500">Digital</span>
-      </span>
-    </a>
+          <nav className="hidden items-center gap-8 text-[14px] sm:flex">
+            <a href="#work" className="hover:opacity-80">
+              Our Work
+            </a>
+            <a href="#pricing" className="hover:opacity-80">
+              Pricing
+            </a>
+            <a href="#faq" className="hover:opacity-80">
+              FAQ
+            </a>
+            <a
+              href="#preview"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-500/90 px-4 font-semibold text-white hover:bg-emerald-500"
+            >
+              Free Preview
+            </a>
+          </nav>
+        </div>
+      </header>
 
-    {/* Nav links */}
-    <nav className="hidden items-center gap-8 text-[14px] sm:flex">
-      <a href="#work" className="hover:opacity-80">Our Work</a>
-      <a href="#pricing" className="hover:opacity-80">Pricing</a>
-      <a href="#faq" className="hover:opacity-80">FAQ</a>
-      <a
-        href="#preview"
-        className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-500/90 px-4 font-semibold text-white hover:bg-emerald-500"
-      >
-        Free Preview
-      </a>
-    </nav>
-  </div>
-</header>
-
-      {/* Main */}
+      {/* ============================== MAIN =============================== */}
       <main className="pt-16 sm:pt-0">
         {/* ============================== HERO ============================== */}
         <section className="mx-auto grid w-full max-w-screen-xl grid-cols-1 items-center gap-8 px-4 pt-2 pb-10 sm:grid-cols-2 sm:px-6 sm:py-16 lg:gap-14 lg:px-8">
@@ -476,6 +478,7 @@ function Faq({ q, a }: { q: string; a: string }) {
     </details>
   );
 }
+
 
 
 
