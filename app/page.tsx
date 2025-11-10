@@ -55,69 +55,67 @@ export default function Page() {
       {/* Mobile Nav (you already have the logo there) */}
       <MobileNav />
 
-    {/* ============================ DESKTOP NAV ============================ */}
-<header className="hidden sm:block sticky top-0 z-[200] border-b bg-white/95 backdrop-blur">
-  <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
+      {/* ============================ DESKTOP NAV ============================ */}
+      <header className="hidden sm:block sticky top-0 z-[200] border-b bg-white/95 backdrop-blur">
+        <div className="mx-auto flex h-16 w-full max-w-screen-xl items-center justify-between px-6">
+          {/* LEFT: Logo + Brand */}
+          <a href="/" className="group flex items-center gap-3">
+            {/* Inline SVG logo with unique gradient ID + no shrink (prevents flex squish) */}
+            <svg
+              className="shrink-0"
+              width="28"
+              height="28"
+              viewBox="0 0 64 64"
+              role="img"
+              aria-label="LocalLink logo"
+            >
+              <defs>
+                {/* Use a unique ID so it won't collide with mobile/footer gradients */}
+                <linearGradient id="llg-desktop-unique" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#23B8A5" />
+                  <stop offset="100%" stopColor="#9BE564" />
+                </linearGradient>
+              </defs>
 
-    {/* LEFT: Logo + Brand */}
-    <a href="/" className="group flex items-center gap-3">
-      {/* Inline SVG logo with unique gradient ID + no shrink (prevents flex squish) */}
-      <svg
-        className="shrink-0"
-        width="28"
-        height="28"
-        viewBox="0 0 64 64"
-        role="img"
-        aria-label="LocalLink logo"
-      >
-        <defs>
-          {/* Use a unique ID so it won't collide with mobile/footer gradients */}
-          <linearGradient id="llg-desktop-unique" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#23B8A5" />
-            <stop offset="100%" stopColor="#9BE564" />
-          </linearGradient>
-        </defs>
+              {/* Solid fallback behind gradient (guarantees visibility even if gradient fails) */}
+              <rect x="4" y="4" width="56" height="56" rx="14" fill="#23B8A5" />
+              <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg-desktop-unique)" />
 
-        {/* Solid fallback behind gradient (guarantees visibility even if gradient fails) */}
-        <rect x="4" y="4" width="56" height="56" rx="14" fill="#23B8A5" />
-        <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#llg-desktop-unique)" />
+              <path
+                d="M20 20v24h12M32 44h12V20"
+                stroke="white"
+                strokeWidth="5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+              />
+            </svg>
 
-        <path
-          d="M20 20v24h12M32 44h12V20"
-          stroke="white"
-          strokeWidth="5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-        />
-      </svg>
+            {/* Brand text — gradient for “local link”, neutral for “digital” */}
+            <span className="flex items-baseline gap-1">
+              <span className="bg-gradient-to-r from-emerald-600 to-lime-500 bg-clip-text text-transparent text-[17px] font-extrabold tracking-tight leading-none">
+                local link
+              </span>
+              <span className="text-[14px] font-semibold text-zinc-500 leading-none">
+                digital
+              </span>
+            </span>
+          </a>
 
-      {/* Brand text — gradient for “local link”, neutral for “digital” */}
-      <span className="flex items-baseline gap-1">
-        <span className="bg-gradient-to-r from-emerald-600 to-lime-500 bg-clip-text text-transparent text-[17px] font-extrabold tracking-tight leading-none">
-          local link
-        </span>
-        <span className="text-[14px] font-semibold text-zinc-500 leading-none">
-          digital
-        </span>
-      </span>
-    </a>
-
-    {/* RIGHT: Nav links */}
-    <nav className="hidden items-center gap-8 text-[14px] sm:flex">
-      <a href="#work" className="hover:opacity-80">Our Work</a>
-      <a href="#pricing" className="hover:opacity-80">Pricing</a>
-      <a href="#faq" className="hover:opacity-80">FAQ</a>
-      <a
-        href="#preview"
-        className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-500/90 px-4 font-semibold text-white hover:bg-emerald-500"
-      >
-        Free Preview
-      </a>
-    </nav>
-  </div>
-</header>
-
+          {/* RIGHT: Nav links */}
+          <nav className="hidden items-center gap-8 text-[14px] sm:flex">
+            <a href="#work" className="hover:opacity-80">Our Work</a>
+            <a href="#pricing" className="hover:opacity-80">Pricing</a>
+            <a href="#faq" className="hover:opacity-80">FAQ</a>
+            <a
+              href="#preview"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-emerald-500/90 px-4 font-semibold text-white hover:bg-emerald-500"
+            >
+              Free Preview
+            </a>
+          </nav>
+        </div>
+      </header>
 
       {/* ============================== MAIN =============================== */}
       <main className="pt-16 sm:pt-0">
@@ -126,22 +124,15 @@ export default function Page() {
           {/* Left */}
           <div>
             <h1 className="text-[clamp(32px,6vw,56px)] font-extrabold leading-[1.05] tracking-[-0.02em] text-zinc-900">
-              Where local business meets{" "}
-              <span className="text-emerald-600">modern design</span>.
+              Bridging the gap between small business and big technology.
             </h1>
 
-            {/* Short mobile line */}
+            {/* Subheading (same text for mobile & desktop to keep message consistent) */}
             <p className="mt-3 text-[15.5px] text-zinc-600 sm:hidden">
-              Fast, clean sites that make your phone ring.
+              LocalLink Digital turns your local business into a digital powerhouse — building, maintaining, and optimizing a high-performance website that helps you attract customers, stay visible, and compete with corporate giants.
             </p>
-
-            {/* Longer desktop copy */}
             <p className="mt-4 hidden max-w-xl text-[15.5px] leading-7 text-zinc-600 sm:block">
-              We build and maintain professional websites for small businesses—and keep them
-              <strong className="text-zinc-800 font-semibold"> visible on Google</strong>,{" "}
-              <strong className="text-zinc-800 font-semibold">fast</strong>, and{" "}
-              <strong className="text-zinc-800 font-semibold">up to date</strong>. You run the
-              business. We handle the website <em>and</em> the web results.
+              LocalLink Digital turns your local business into a digital powerhouse — building, maintaining, and optimizing a high-performance website that helps you attract customers, stay visible, and compete with corporate giants.
             </p>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
